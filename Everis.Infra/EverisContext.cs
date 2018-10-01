@@ -12,8 +12,8 @@ namespace Everis.Infra
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ForSqlServerUseIdentityColumns();
-            //modelBuilder.HasDefaultSchema("EverisPedidos");
+            modelBuilder.ForSqlServerUseIdentityColumns();
+            modelBuilder.HasDefaultSchema("EverisPedidos");
 
             MapPedido.MapingPedido(modelBuilder);
         }
