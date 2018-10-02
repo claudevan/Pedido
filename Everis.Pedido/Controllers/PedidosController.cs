@@ -15,6 +15,8 @@ namespace Everis.API.Controllers
             _servicePedido = servicePedido;
         }
 
+        //Estou recebendo diretamente a entidade, o que não acredito ser uma boa pratica, gosto de trabalhar com commands
+        //Pois assim consigo controlar o que recebo e somente faõ alteração da entidade via métodos de acesso
         [HttpPost]
         public async Task<IActionResult> Inserir([FromBody] Domain.Entities.Pedido pedido)
         {
