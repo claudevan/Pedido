@@ -1,6 +1,5 @@
 ﻿using Everis.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Everis.API.Controllers
@@ -21,6 +20,9 @@ namespace Everis.API.Controllers
         {
             try
             {
+                if (pedido.Invalid)
+                    return BadRequest(pedido.Notifications);
+
                 var newPedido = _servicePedido.Inserir(pedido);
 
                 return Ok(new { Messsage = "Inserido com sucesso" });
@@ -50,6 +52,9 @@ namespace Everis.API.Controllers
         {
             try
             {
+                if (pedido.Invalid)
+                    return BadRequest(pedido.Notifications);
+
                 var pedidoAlt = _servicePedido.Alterar(pedido);
 
                 return Ok(new { Messsage = "Alterado com sucesso", Data = pedidoAlt });

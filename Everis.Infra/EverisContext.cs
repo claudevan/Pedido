@@ -20,6 +20,7 @@ namespace Everis.Infra
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //Criar classe factory para resolver essa conexão fixa
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=DBPedidos;Trusted_Connection=True;MultipleActiveResultSets=true");
 
             base.OnConfiguring(optionsBuilder);

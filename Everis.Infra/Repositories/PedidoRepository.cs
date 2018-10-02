@@ -1,12 +1,13 @@
 ﻿using Everis.Domain.Entities;
 using Everis.Domain.Interfaces.Services;
-using System;
 using System.Threading.Tasks;
 
 namespace Everis.Infra.Repositories
 {
     public class PedidoRepository : IServicePedido
     {
+
+        //Deveria ter criado um reposityPattern pra não ficar repetindo código
         public Task<Pedido> Alterar(Pedido pedido)
         {
             var db = new EverisContext();
