@@ -18,6 +18,13 @@ namespace Everis.Infra
             MapPedido.MapingPedido(modelBuilder);
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=DBPedidos;Trusted_Connection=True;MultipleActiveResultSets=true");
+
+            base.OnConfiguring(optionsBuilder);
+        }
+
         public DbSet<Pedido> Pedidos { get; set; }
 
     }

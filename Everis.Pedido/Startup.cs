@@ -33,6 +33,8 @@ namespace Everis.Pedido
 
             services.AddDbContext<EverisContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("EverisContextConnection")));
+
+            services.AddTransient<Domain.Interfaces.Services.IServicePedido, Infra.Repositories.PedidoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

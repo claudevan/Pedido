@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Everis.Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -8,11 +9,19 @@ namespace Everis.API.Controllers
     [ApiController]
     public class PedidosController : ControllerBase
     {
+        private IServicePedido _servicePedido;
+
+        public PedidosController(IServicePedido servicePedido)
+        {
+            _servicePedido = servicePedido;
+        }
+
         [HttpPost]
         public async Task<IActionResult> Inserir([FromBody] Domain.Entities.Pedido pedido)
         {
             try
             {
+                var newPedido = _servicePedido.Inserir(pedido);
 
                 return Ok(new { Messsage = "Inserido com sucesso" });
             }
@@ -27,28 +36,27 @@ namespace Everis.API.Controllers
         {
             try
             {
-
-                return Ok(new { Messsage = "Inserido com sucesso" });
+                var pedido = _servicePedido.Obter(id);
+                return Ok(new { Data = pedido.Result });
             }
             catch (System.Exception)
             {
-
-                throw;
+                return BadRequest("Erro ao obter dados, favor entrar em contato com o administrador do sistema");
             }
         }
 
         [HttpPut]
-        public async Task<IActionResult> Alterar()
+        public async Task<IActionResult> Alterar([FromBody] Domain.Entities.Pedido pedido)
         {
             try
             {
+                var pedidoAlt = _servicePedido.Alterar(pedido);
 
-                return Ok(new { Messsage = "Inserido com sucesso" });
+                return Ok(new { Messsage = "Alterado com sucesso", Data = pedidoAlt });
             }
             catch (System.Exception)
             {
-
-                throw;
+                return BadRequest("Erro ao alterar dados, favor entrar em contato com o administrador do sistema");
             }
         }
 
