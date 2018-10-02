@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Everis.Domain\Everis.Domain.csproj" />
     <ProjectReference Include="..\Everis.Infra\Everis.Infra.csproj" />
   </ItemGroup>
 

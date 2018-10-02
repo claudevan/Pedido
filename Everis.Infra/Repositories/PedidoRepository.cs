@@ -1,4 +1,5 @@
-﻿using Everis.Domain.Entities;
+﻿using Everis.Domain.Arguments;
+using Everis.Domain.Entities;
 using Everis.Domain.Interfaces.Services;
 using System.Threading.Tasks;
 
@@ -8,13 +9,17 @@ namespace Everis.Infra.Repositories
     {
 
         //Deveria ter criado um reposityPattern pra não ficar repetindo código
-        public Task<Pedido> Alterar(Pedido pedido)
+        public Task<Pedido> Alterar(PedidoRequest pedidoRequest)
         {
             var db = new EverisContext();
 
-            var pedidoAlt = db.Pedidos.Find(pedido.Id);
+            var pedido = db.Pedidos.Find(pedidoRequest.Id);
 
-            pedidoAlt.NomeCliente = pedido.NomeCliente;
+            pedido.Alterar(pedidoRequest.NomeCliente,
+                    pedidoRequest.Email,
+                    pedidoRequest.CPF,
+                    pedidoRequest.ValorTotal,
+                    pedidoRequest.DataPedido);
 
             db.SaveChanges();
 
@@ -34,7 +39,7 @@ namespace Everis.Infra.Repositories
         public Task<Pedido> Obter(int id)
         {
             var db = new EverisContext();
-            
+
             return Task.FromResult(db.Pedidos.Find(id));
         }
     }

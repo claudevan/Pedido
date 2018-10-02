@@ -18,14 +18,20 @@ namespace Everis.API.Controllers
         //Estou recebendo diretamente a entidade, o que não acredito ser uma boa pratica, gosto de trabalhar com commands
         //Pois assim consigo controlar o que recebo e somente faõ alteração da entidade via métodos de acesso
         [HttpPost]
-        public async Task<IActionResult> Inserir([FromBody] Domain.Entities.Pedido pedido)
+        public async Task<IActionResult> Inserir([FromBody] Domain.Arguments.PedidoRequest pedido)
         {
             try
             {
+                pedido.Validate();
                 if (pedido.Invalid)
                     return BadRequest(pedido.Notifications);
 
-                var newPedido = _servicePedido.Inserir(pedido);
+                var newPedido = _servicePedido.Inserir(new Domain.Entities.Pedido(
+                    pedido.NomeCliente,
+                    pedido.Email,
+                    pedido.CPF,
+                    pedido.ValorTotal,
+                    pedido.DataPedido));
 
                 return Ok(new { Messsage = "Inserido com sucesso" });
             }
@@ -50,10 +56,11 @@ namespace Everis.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Alterar([FromBody] Domain.Entities.Pedido pedido)
+        public async Task<IActionResult> Alterar([FromBody] Domain.Arguments.PedidoRequest pedido)
         {
             try
             {
+                pedido.Validate();
                 if (pedido.Invalid)
                     return BadRequest(pedido.Notifications);
 
